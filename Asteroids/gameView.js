@@ -21,17 +21,14 @@
     }).bind(this), 1000 / 60);
     this.ship = this.game.ship;
     this.bindKeyHandlers();
-
   }
 
   GameView.prototype.bindKeyHandlers = function () {
-    //make this actually support multikeys
     var ship = this.ship;
     key('left', function(){ ship.power([-1, 0]); });
     key('right', function(){ship.power([1, 0]); });
     key('up', function(){ship.power([0, -1]); });
     key('down', function(){ship.power([0, 1]); });
-
     key('space', function(){ship.fireBullet(); });
   }
 
