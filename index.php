@@ -1,1 +1,1 @@
-<?php include_once("asteroids/home.html"); ?>
+<?php include_once("home.html"); ?>
