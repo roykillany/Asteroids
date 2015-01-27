@@ -10,19 +10,33 @@
     };
     this.ship = new Asteroids.Ship (this.randomPosition(), this);
     this.bullets = [];
+    $("div#candy-count").html("<strong>Candies on screen: " + this.asteroids.length + "</strong>");
+    $("div#lives").html("<strong>Lives: " + this.ship.lives + "</strong>");
   };
 
-  Game.DIM_X = 1000;
-  Game.DIM_Y = 700;
-  Game.NUM_ASTEROIDS = 40;
+  Game.DIM_X = 1600;
+  Game.DIM_Y = 750;
+  Game.NUM_ASTEROIDS = 1;
 
   Game.prototype.addAsteroids = function () {
     this.asteroids.push(new Asteroids.Asteroid(this.randomPosition(), this));
   };
 
+  Game.prototype.addBabyAsteroids = function(pos){
+    for(var i = 0; i < 2; i++){
+      this.asteroids.push(new Asteroids.Asteroid(pos, this))
+    }
+  };
+
   Game.prototype.randomPosition = function() {
     var x = Math.floor(Math.random() * Game.DIM_X);
     var y = Math.floor(Math.random() * Game.DIM_Y);
+    return [x,y];
+  };
+
+  Game.prototype.startPosition = function(){
+    var x = Math.floor(0.5 * Game.DIM_X);
+    var y = Math.floor(0.5 * Game.DIM_Y);
     return [x,y];
   };
 
@@ -62,9 +76,24 @@
         }
 
         if (ast1.isCollidedWith(ast2)) {
-          ast1.collideWith(ast2);
+          if((ast1 instanceof Asteroids.Ship && ast2 instanceof Asteroids.Asteroid) ||
+            (ast1 instanceof Asteroids.Asteroid && ast2 instanceof Asteroids.Ship)){
+            if(that.ship.lives > 1){
+              that.ship.lives--;
+              ast1.collideWith(ast2);
+              $("div#lives").empty();
+              $("div#lives").html("<strong>Lives: " + that.ship.lives + "</strong>");
+            } else {
+              that.ship.lives--;
+              $("div#lives").empty();
+              $("div#lives").html("<strong>Lives: " + that.ship.lives + "</strong>");
+              clearInterval(loop);
+              $("a.restart").removeClass("hidden");
+            }
+          } else {
+            ast1.collideWith(ast2);
+          }
         }
-
       });
     });
   };
@@ -75,19 +104,30 @@
   };
 
   Game.prototype.remove = function(obj) {
-    if (obj instanceof Asteroids.Asteroid) {
-      astIdx = this.asteroids.indexOf(obj);
-      if (astIdx === 0 )
-        this.asteroids.shift();
-      else
-        this.asteroids.splice(astIdx, astIdx);
-
-    } else {
+    if (obj instanceof Asteroids.Bullet) {
       bulIdx = this.bullets.indexOf(obj);
       if (bulIdx === 0)
         this.bullets.shift();
-      else
-        this.bullets.splice(bulIdx, bulIdx);
+        else
+          this.bullets.splice(bulIdx, bulIdx);
+
+
+
+    } else {
+      astIdx = this.asteroids.indexOf(obj)
+      if(astIdx === 0){
+        this.asteroids.shift();
+      } else {
+        this.asteroids.splice(astIdx, astIdx);
+      }
+      this.addBabyAsteroids(obj.pos);
+      $("div#candy-count").empty();
+      $("div#candy-count").append("<strong>Candies on screen: " + this.asteroids.length + "</strong>");
+      $("div#candy-count").append("<strong>Candies to win: " + (100 - this.asteroids.length) + "</strong>");
+      if(this.asteroids.length > 100){
+        clearInterval(loop);
+        $("a.restart").removeClass("hidden");
+      }
     }
   };
 
@@ -100,5 +140,5 @@
            pos[0] > Game.DIM_X ||
            pos[1] < 0 ||
            pos[1] > Game.DIM_Y;
-  }
+  };
 })();

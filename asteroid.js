@@ -4,8 +4,15 @@
   }
 
   var Asteroid = Asteroids.Asteroid = function(pos, game) {
-    Asteroid.COLOR = "#00FF00";
-    Asteroid.RADIUS = Math.floor(Math.random() * 50) + 1;0
+    var COLOR = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C",
+    "D", "E", "F"];
+    Asteroid.COLOR = "#" + COLOR[Math.floor((Math.random() * COLOR.length))] +
+    COLOR[Math.floor((Math.random() * COLOR.length))] +
+    COLOR[Math.floor((Math.random() * COLOR.length))] +
+    COLOR[Math.floor((Math.random() * COLOR.length))] +
+    COLOR[Math.floor((Math.random() * COLOR.length))] +
+    COLOR[Math.floor((Math.random() * COLOR.length))];
+    Asteroid.RADIUS = Math.floor(Math.random() * 50) + 25
     Asteroids.MovingObject.call(this, {
       pos: pos,
       vel: Asteroids.Util.randomVec(Math.random() * 10),
@@ -23,6 +30,9 @@
   Asteroid.prototype.collideWith = function (otherObject) {
     if (otherObject instanceof Asteroids.Ship) {
       otherObject.relocate();
+    } else if(otherObject instanceof Asteroids.Bullet){
+      this.game.remove(otherObject);
+      this.game.remove(this);
     }
   };
 })();

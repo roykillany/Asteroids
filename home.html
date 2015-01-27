@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Asteroids</title>
+  <title>Candy Rush</title>
+  <link rel="stylesheet" href="./home.css" />
+  <script src="./jquery.min.js"></script>
+  <script src="./jquery.js"></script>
+  <script src="./hover-min.css"></script>
+  <script src="./hover.css"></script>
 
   <style>
   html, body, canvas {
@@ -12,7 +17,31 @@
 </head>
 
 <body>
-  <canvas id="game-canvas" width=900 height=900></canvas>
+  <canvas id="game-canvas"></canvas>
+
+  <div id="HUD">
+    <h1 class="game-header">Welcome to Candy Rush!</h1>
+
+    <div id="instructions">
+      <p>
+        How to Play:
+        <ul>
+          <li>1. Make much bullet</li>
+          <li>2. ???</li>
+          <li>3. PROFIT</li>
+          <li>4. (candies split into two when hit)</li>
+        </ul>
+      </p>
+    </div>
+
+    <div class="scores group">
+      <div id="lives" class="group">
+      </div>
+      <div id="candy-count" class="group">
+      </div>
+    </div>
+    <a class="restart hidden hvr-glow" href="#">Play again!</a>
+  </div>
 
   <script src="./keymaster.js"></script>
   <script src="./util.js"></script>
@@ -25,9 +54,23 @@
 
   <script>
     var canvas = document.getElementById("game-canvas");
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-    (new Asteroids.GameView()).start(canvas);
+    canvas.height = 750;
+    canvas.width = 1600;
+    var gameView = new Asteroids.GameView();
+    gameView.start(canvas);
+  </script>
+
+  <script>
+    $("a.restart").click(function(event){
+      console.log("hi")
+      event.preventDefault();
+      var canvas = document.getElementById("game-canvas");
+      canvas.height = 750;
+      canvas.width = 1600;
+      var gameView = new Asteroids.GameView();
+      gameView.restart(canvas);
+      $("a.restart").addClass("hidden");
+    })
   </script>
 </body>
 </html>

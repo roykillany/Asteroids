@@ -12,15 +12,24 @@
     ctx = canvas.getContext("2d");
     var img = new Image();
     img.onload = function () {
-      ctx.drawImage(img, 200, 200);
+      ctx.drawImage(img, 0, 0);
     };
-    img.src = './babyducks.gif';
-    window.setInterval((function () {
+    img.src = './colorful-candy-frame.jpg';
+    loop = window.setInterval((function () {
       this.game.step();
       this.game.draw(ctx, img);
     }).bind(this), 1000 / 60);
     this.ship = this.game.ship;
     this.bindKeyHandlers();
+  }
+
+  GameView.prototype.stop = function(canvas){
+    clearInterval(loop);
+  }
+
+  GameView.prototype.restart = function(canvas){
+    this.game = new Asteroids.Game();
+    this.start(canvas);
   }
 
   GameView.prototype.bindKeyHandlers = function () {

@@ -5,8 +5,9 @@
 
   var Ship = Asteroids.Ship = function (pos, game) {
     Ship.RADIUS = 20;
-    Ship.COLOR = "#FF0000";
+    Ship.COLOR = "#000000";
     Ship.DIR = [0, 1];
+    this.lives = 3;
     this.dir = Ship.DIR;
     Asteroids.MovingObject.call(this, {
       pos: pos,
@@ -34,8 +35,10 @@
   };
 
   Ship.prototype.fireBullet = function() {
-    var bullet = new Asteroids.Bullet(this.pos, this.game);
-    this.game.bullets.push(bullet);
+    if (this.game.bullets.length < 3){
+      var bullet = new Asteroids.Bullet(this.pos, this.game);
+      this.game.bullets.push(bullet);
+    }
   }
 
 })();
