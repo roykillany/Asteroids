@@ -7,7 +7,7 @@
   <script src="./jquery.js"></script>
   <script src="./hover-min.css"></script>
   <script src="./hover.css"></script>
-
+  <link rel="stylesheet" href="./home-tablet.css" media="(max-width: 1100px)">
   <style>
   html, body, canvas {
     padding: 0px;
@@ -23,25 +23,24 @@
     <h1 class="game-header">Welcome to Candy Rush!</h1>
 
     <div id="instructions">
-      <p>
-        How to Play:
-        <ul>
-          <li>1. Make much bullet</li>
-          <li>2. ???</li>
-          <li>3. PROFIT</li>
-          <li>4. (candies split into two when hit)</li>
-        </ul>
-      </p>
+      How to Play:
+      <ul>
+        <li>1. Make much bullet</li>
+        <li>2. ???</li>
+        <li>3. PROFIT</li>
+        <li>4. (candies split into two when hit)</li>
+      </ul>
     </div>
 
-    <div class="scores group">
+    <div class="scores">
       <div id="lives" class="group">
       </div>
       <div id="candy-count" class="group">
       </div>
     </div>
-    <a class="restart hidden hvr-glow" href="#">Play again!</a>
+    <a class="restart hvr-glow" href="#">Play again!</a>
   </div>
+
 
   <script src="./keymaster.js"></script>
   <script src="./util.js"></script>

@@ -1,0 +1,24 @@
+@media only screen and (max-width: 1100px) {
+  h1.game-header {
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    font-size: 100%;
+  }
+
+  div#instructions {
+    margin-left: 10%;
+    font-size: 12px;
+  }
+
+  div.scores {
+    width: auto;
+    float: none;
+    top: 55px;
+  }
+
+  a.restart {
+    bottom: -99px;
+    position: absolute;
+  }
+}
